@@ -1160,29 +1160,20 @@
   });
 </script>
 
-<script type="module">
+<script>
   /* =====================================================================
-     PERSISTÊNCIA + BARRAS DE PROGRESSO
+     PERSISTÊNCIA COMPARTILHADA (Pantry) + BARRAS DE PROGRESSO
      ---------------------------------------------------------------------
-     • Para progresso COMPARTILHADO entre todos que abrem o painel, cole
-       abaixo a configuração do seu projeto Firebase (instruções enviadas).
-     • Enquanto não preencher, o painel salva apenas neste navegador.
+     Para que TODOS que abrem o site vejam o mesmo progresso, basta:
+       1) Pegar um "Pantry ID" gratuito em  https://getpantry.cloud
+          (só informar um e-mail — recebe o ID na hora).
+       2) Colar o ID abaixo, no lugar de COLE_SEU_PANTRY_ID.
+     Enquanto não colar, o painel salva apenas neste navegador.
   ===================================================================== */
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
-
-  // 🔧 COLE AQUI a config do seu projeto Firebase ↓↓↓
-  const FIREBASE_CONFIG = {
-    apiKey:            "COLE_SUA_API_KEY",
-    authDomain:        "SEU_PROJETO.firebaseapp.com",
-    databaseURL:       "https://SEU_PROJETO-default-rtdb.firebaseio.com",
-    projectId:         "SEU_PROJETO",
-    storageBucket:     "SEU_PROJETO.appspot.com",
-    messagingSenderId: "000000000000",
-    appId:             "1:000000000000:web:xxxxxxxxxxxxxxxx"
-  };
-  const DB_PATH = "state-grid/checks"; // nó onde o progresso é salvo
-  const LS_KEY  = "sgbh-pmo-state-grid";
+  const PANTRY_ID = "4af75b37-3846-4614-9020-bce1ab9d1dc2";          // <- cole aqui o seu ID
+  const BASKET    = "stateGridChecks";             // nome do "cesto" de dados
+  const LS_KEY    = "sgbh-pmo-state-grid";
+  const API       = () => "https://getpantry.cloud/apiv1/pantry/" + PANTRY_ID + "/basket/" + BASKET;
 
   /* ---------- hash estável a partir do texto do item ---------- */
   function hash(str){
@@ -1191,7 +1182,7 @@
     return h.toString(36);
   }
 
-  /* ---------- indexar checkboxes e montar barra por "P" ---------- */
+  /* ---------- indexar checkboxes e montar a barra de cada "P" ---------- */
   const sections = [...document.querySelectorAll('#tab-entregas .prod-section')];
   const groups   = [];
   const keyToBox = new Map();
@@ -1251,10 +1242,11 @@
     opCount.textContent = totalDone + ' / ' + allBoxes.length + ' entregas';
   }
 
-  /* ---------- camada de armazenamento ---------- */
-  let mode = 'memory';          // 'cloud' | 'local' | 'memory'
+  /* ---------- estado / UI ---------- */
+  let mode = 'memory';                 // 'cloud' | 'local' | 'memory'
   let memState = {};
-  let dbRef = null;
+  const pending = new Map();           // edições locais recentes (evita "voltar" durante sync)
+  const PENDING_MS = 9000;
 
   function setSync(m){
     mode = m;
@@ -1271,15 +1263,24 @@
     keyToBox.forEach((el, key) => { el.checked = !!state[key]; });
     refresh();
   }
-
   function currentState(){
     const s = {};
-    keyToBox.forEach((el, key) => { if (el.checked) s[key] = true; });
+    keyToBox.forEach((el, key) => { s[key] = !!el.checked; });
     return s;
   }
+  function mergeRemote(remote){
+    remote = remote || {};
+    const now = Date.now();
+    keyToBox.forEach((el, key) => {
+      if (pending.has(key) && now - pending.get(key) < PENDING_MS) return; // respeita clique recente
+      el.checked = !!remote[key];
+    });
+    refresh();
+  }
 
+  /* ---------- cache local (resiliência / modo offline) ---------- */
   function lsAvailable(){
-    try { localStorage.setItem('__t', '1'); localStorage.removeItem('__t'); return true; }
+    try { localStorage.setItem('__t','1'); localStorage.removeItem('__t'); return true; }
     catch(e){ return false; }
   }
   function readLocal(){
@@ -1290,15 +1291,45 @@
     try { localStorage.setItem(LS_KEY, JSON.stringify(state)); }
     catch(e){ memState = state; }
   }
+  function initLocal(){
+    setSync(lsAvailable() ? 'local' : 'memory');
+    applyState(readLocal());
+  }
+
+  /* ---------- Pantry (REST) ---------- */
+  async function cloudGet(){
+    const r = await fetch(API(), { method: 'GET' });
+    if (r.status === 400) return {};                 // cesto ainda não existe = vazio
+    if (!r.ok) throw new Error('GET ' + r.status);
+    return await r.json();
+  }
+  async function cloudMerge(patch){                  // PUT faz merge (ideal p/ edições simultâneas)
+    const r = await fetch(API(), {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(patch)
+    });
+    if (!r.ok) throw new Error('PUT ' + r.status);
+  }
+  async function cloudReplace(obj){                  // POST cria/substitui o cesto inteiro
+    const r = await fetch(API(), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(obj)
+    });
+    if (!r.ok) throw new Error('POST ' + r.status);
+  }
 
   /* ---------- salvar ao marcar/desmarcar ---------- */
   allBoxes.forEach(el => {
     el.addEventListener('change', () => {
       refresh();
-      if (mode === 'cloud' && dbRef){
-        update(dbRef, { [el.dataset.key]: el.checked ? true : null }).catch(() => {});
-      } else {
-        writeLocal(currentState());
+      writeLocal(currentState());                    // cache imediato
+      if (mode === 'cloud'){
+        const key = el.dataset.key;
+        pending.set(key, Date.now());
+        cloudMerge({ [key]: el.checked })
+          .catch(() => cloudReplace(currentState()).catch(e => console.warn('Falha ao salvar na nuvem', e)));
       }
     });
   });
@@ -1310,36 +1341,25 @@
       ? 'Isto vai DESMARCAR todos os itens para TODOS que acessam o painel. Continuar?'
       : 'Isto vai desmarcar todos os itens deste dispositivo. Continuar?';
     if (!confirm(msg)) return;
-    keyToBox.forEach(el => { el.checked = false; });
+    keyToBox.forEach((el, key) => { el.checked = false; pending.set(key, Date.now()); });
     refresh();
-    if (mode === 'cloud' && dbRef){
-      const wipe = {};
-      keyToBox.forEach((_, key) => { wipe[key] = null; });
-      update(dbRef, wipe).catch(() => {});
-    } else {
-      writeLocal({});
-    }
+    writeLocal({});
+    if (mode === 'cloud') cloudReplace({}).catch(e => console.warn('Falha ao resetar na nuvem', e));
   });
 
   /* ---------- inicialização ---------- */
-  function initLocal(){
-    setSync(lsAvailable() ? 'local' : 'memory');
-    applyState(readLocal());
-  }
-
-  const configured = FIREBASE_CONFIG.apiKey && !FIREBASE_CONFIG.apiKey.startsWith('COLE');
+  const configured = PANTRY_ID && !PANTRY_ID.startsWith('COLE');
   if (configured){
-    try {
-      const app = initializeApp(FIREBASE_CONFIG);
-      dbRef = ref(getDatabase(app), DB_PATH);
-      onValue(dbRef,
-        (snap) => { applyState(snap.val() || {}); setSync('cloud'); },
-        (err)  => { console.warn('Firebase indisponível — usando local.', err); initLocal(); }
-      );
-    } catch(e){
-      console.warn('Falha ao iniciar Firebase — usando local.', e);
-      initLocal();
-    }
+    setSync('cloud');
+    applyState(readLocal());                         // mostra cache instantâneo
+    const poll = async () => {
+      if (document.hidden) return;
+      try { mergeRemote(await cloudGet()); if (mode !== 'cloud') setSync('cloud'); }
+      catch(e){ console.warn('Sincronização falhou (tentando de novo)', e); }
+    };
+    poll();                                          // primeira leitura
+    setInterval(poll, 7000);                          // sincroniza a cada 7s
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) poll(); });
   } else {
     initLocal();
   }
