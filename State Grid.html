@@ -1,10 +1,9 @@
-```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PMO Dashboard — State Grid / Thymos Energia</title>
+<title>Painel PMO — State Grid / Thymos Energia</title>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -17,42 +16,12 @@
     --text2: #5A5651;
     --text3: #9D8A80;
 
-    /* ── Thymos brand ── */
-    --orange: #E36523;          
+    --orange: #E36523;
     --orange-light: #FDF0E8;
-    --orange-dark: #6F2617;     
-    --orange-mid: #FA8919;      
-
-    /* Cinza chumbo Thymos */
-    --charcoal: #36343A;        
-    --charcoal-light: #EEEDEF;
-
-    /* Bege/cinza quente */
-    --warm: #9D8A80;            
-    --warm-light: #F5F1EE;
-
-    /* Funcionais mapeados na paleta Thymos */
-    --green: #E36523;           
-    --green-light: #FDF0E8;
-    --green-dark: #6F2617;
-
-    --blue: #36343A;            
-    --blue-light: #EEEDEF;
-    --blue-dark: #1C1A18;
-
-    --pink: #9D8A80;            
-    --pink-light: #F5F1EE;
-    --pink-dark: #5A5651;
-
-    --purple: #6F2617;          
-    --purple-light: #F7EDEB;
-    --purple-dark: #3D100A;
-
-    --amber: #FA8919;           
-    --amber-light: #FEF4E6;
-    --amber-dark: #7A3D06;
-
-    --teal: #36343A;
+    --orange-dark: #6F2617;
+    --orange-mid: #FA8919;
+    --charcoal: #36343A;
+    --warm: #9D8A80;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -73,27 +42,14 @@
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
-  }
-
-  .page-header h1 {
-    font-size: 18px;
-    font-weight: 600;
-    color: #FFFFFF;
-    letter-spacing: -0.02em;
-  }
-
-  .page-header .subtitle {
-    font-size: 11px;
-    color: #9D8A80;
-    margin-top: 3px;
-    font-family: 'DM Mono', monospace;
-  }
-
-  .header-meta {
-    display: flex;
+    flex-wrap: wrap;
     gap: 12px;
-    align-items: center;
   }
+
+  .page-header h1 { font-size: 18px; font-weight: 600; color: #FFFFFF; letter-spacing: -0.02em; }
+  .page-header .subtitle { font-size: 11px; color: #9D8A80; margin-top: 3px; font-family: 'DM Mono', monospace; }
+
+  .header-meta { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
 
   .chip {
     font-family: 'DM Mono', monospace;
@@ -101,15 +57,11 @@
     padding: 4px 10px;
     border-radius: 4px;
     border: 1px solid rgba(255,255,255,0.2);
-    color: #9D8A80;
+    color: #C8C3BB;
     background: rgba(255,255,255,0.08);
   }
-
-  .chip.accent {
-    background: #E36523;
-    border-color: #E36523;
-    color: #FFFFFF;
-  }
+  .chip.accent { background: #E36523; border-color: #E36523; color: #FFFFFF; }
+  .chip.contact { background: rgba(227,101,35,0.12); border-color: rgba(227,101,35,0.4); color: #FA8919; }
 
   .container { padding: 24px 32px; }
 
@@ -119,7 +71,6 @@
     gap: 10px;
     margin-bottom: 24px;
   }
-
   .metric {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -127,51 +78,17 @@
     border-radius: 10px;
     padding: 14px 16px;
   }
+  .metric-label { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; font-family: 'DM Mono', monospace; margin-bottom: 6px; }
+  .metric-value { font-size: 26px; font-weight: 600; color: #E36523; letter-spacing: -0.03em; line-height: 1; }
+  .metric-sub { font-size: 10px; color: var(--text3); margin-top: 4px; }
 
-  .metric-label {
-    font-size: 10px;
-    color: var(--text3);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    font-family: 'DM Mono', monospace;
-    margin-bottom: 6px;
-  }
-
-  .metric-value {
-    font-size: 26px;
-    font-weight: 600;
-    color: #E36523;
-    letter-spacing: -0.03em;
-    line-height: 1;
-  }
-
-  .metric-sub {
-    font-size: 10px;
-    color: var(--text3);
-    margin-top: 4px;
-  }
-
-  .tabs {
-    display: flex;
-    gap: 2px;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 24px;
-  }
-
+  .tabs { display: flex; gap: 2px; border-bottom: 1px solid var(--border); margin-bottom: 24px; flex-wrap: wrap; }
   .tab-btn {
-    background: none;
-    border: none;
-    padding: 10px 18px;
-    font-family: 'Sora', sans-serif;
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--text3);
-    cursor: pointer;
-    border-bottom: 2px solid transparent;
-    margin-bottom: -1px;
-    transition: color 0.15s, border-color 0.15s;
+    background: none; border: none; padding: 10px 18px;
+    font-family: 'Sora', sans-serif; font-size: 12px; font-weight: 500;
+    color: var(--text3); cursor: pointer; border-bottom: 2px solid transparent;
+    margin-bottom: -1px; transition: color 0.15s, border-color 0.15s;
   }
-
   .tab-btn:hover { color: var(--text2); }
   .tab-btn.active { color: #E36523; border-bottom-color: #E36523; font-weight: 600; }
 
@@ -180,630 +97,157 @@
 
   /* BADGES */
   .badge {
-    display: inline-block;
-    font-size: 10px;
-    font-weight: 500;
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-family: 'DM Mono', monospace;
-    white-space: nowrap;
+    display: inline-block; font-size: 10px; font-weight: 500;
+    padding: 2px 8px; border-radius: 4px; font-family: 'DM Mono', monospace; white-space: nowrap;
   }
-  .badge-reg   { background: #FDF0E8; color: #6F2617; }
-  .badge-tar   { background: #FEF4E6; color: #7A3D06; }
-  .badge-fin   { background: #EEEDEF; color: #1C1A18; }
-  .badge-gest  { background: #F5F1EE; color: #5A5651; }
+  .badge-reg   { background: #FDF0E8; color: #6F2617; }   /* Regulatório */
+  .badge-tar   { background: #FEF4E6; color: #7A3D06; }   /* Regulação Econômica (Tarifas) */
+  .badge-fin   { background: #EEEDEF; color: #1C1A18; }   /* Consultoria Financeira */
+  .badge-gest  { background: #F5F1EE; color: #5A5651; }   /* Novos Negócios */
   .badge-pmo   { background: #36343A; color: #FFFFFF; }
   .badge-ws    { background: #FEF4E6; color: #7A3D06; }
-  .badge-p1    { background: #E36523; color: #FFFFFF; }
-  .badge-p2    { background: #FA8919; color: #FFFFFF; }
-  .badge-p3    { background: #36343A; color: #FFFFFF; }
-  .badge-p4    { background: #9D8A80; color: #FFFFFF; }
-  .badge-p5    { background: #6F2617; color: #FFFFFF; }
+  .badge-f1    { background: #E36523; color: #FFFFFF; }
+  .badge-f2    { background: #FA8919; color: #FFFFFF; }
+  .badge-f3    { background: #36343A; color: #FFFFFF; }
+  .badge-f4    { background: #9D8A80; color: #FFFFFF; }
+  .badge-f5    { background: #6F2617; color: #FFFFFF; }
 
-  /* PRODUCT CARDS */
-  .prod-section { margin-bottom: 32px; }
+  .tag-apoio {
+    display:inline-block; font-family:'DM Mono',monospace; font-size:9px; font-weight:500;
+    padding:1px 6px; border-radius:3px; background:var(--surface2); color:var(--text3); margin-left:6px; letter-spacing:0.03em;
+  }
 
+  /* PRODUCT / PHASE CARDS */
+  .prod-section { margin-bottom: 30px; }
   .prod-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 12px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 6px; padding-bottom: 10px; border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
   }
-
-  .prod-header h2 {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text);
+  .prod-header h2 { font-size: 13px; font-weight: 600; color: var(--text); }
+  .prod-dates {
+    font-family:'DM Mono',monospace; font-size:10px; color:var(--orange-dark);
+    background:var(--orange-light); padding:3px 8px; border-radius:4px; margin-left:auto;
   }
-
-  .scope-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0,1fr));
-    gap: 10px;
+  .sub-header {
+    font-size: 11px; font-weight: 600; color: var(--text2);
+    text-transform: uppercase; letter-spacing: 0.05em; font-family:'DM Mono',monospace;
+    margin: 16px 0 10px; display:flex; align-items:center; gap:8px;
   }
+  .sub-header::before { content:""; width:14px; height:2px; background:var(--orange); display:inline-block; }
 
-  .scope-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 14px 16px;
-  }
+  .scope-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 10px; }
+  .scope-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
+  .scope-card.focus { border-top: 3px solid #E36523; }
+  .scope-card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid var(--border); flex-wrap:wrap; }
+  .scope-card-header span.cardtitle { font-size: 11px; font-weight: 600; color: var(--text2); }
+  .scope-card-meta { font-size: 10px; color: var(--text3); margin-bottom: 8px; font-style: italic; }
 
-  .scope-card-header {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 10px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .scope-card-header span {
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--text2);
-  }
-
-  .scope-card-meta {
-    font-size: 10px;
-    color: var(--text3);
-    margin-bottom: 10px;
-    font-style: italic;
-  }
-
-  .del-item {
-    display: flex;
-    gap: 8px;
-    align-items: flex-start;
-    padding: 6px 0;
-    border-bottom: 1px solid var(--border);
-    cursor: pointer;
-  }
-
+  .del-item { display: flex; gap: 8px; align-items: flex-start; padding: 6px 0; border-bottom: 1px solid var(--border); }
   .del-item:last-child { border-bottom: none; }
+  .del-dot { width: 5px; height: 5px; border-radius: 50%; margin-top: 7px; flex-shrink: 0; }
+  .dot-reg { background: #E36523; } .dot-tar { background: #FA8919; } .dot-fin { background: #36343A; } .dot-gest { background: #9D8A80; }
+  .del-text { font-size: 11px; color: var(--text); line-height: 1.55; }
+  .del-text b { color: var(--orange-dark); font-weight:600; }
 
-  /* Checklist Styles */
-  .del-checkbox {
-    margin-top: 2px;
-    width: 14px;
-    height: 14px;
-    flex-shrink: 0;
-    cursor: pointer;
+  .note-box {
+    background: #FEF4E6; border: 1px solid #F3D9B0; border-left: 3px solid #FA8919;
+    border-radius: 0 8px 8px 0; padding: 10px 14px; margin-top: 12px; font-size: 11px; color: #5A4421; line-height:1.55;
   }
-
-  .cb-reg  { accent-color: #E36523; }
-  .cb-tar  { accent-color: #FA8919; }
-  .cb-fin  { accent-color: #36343A; }
-  .cb-gest { accent-color: #9D8A80; }
-
-  .del-text {
-    font-size: 11px;
-    color: var(--text);
-    line-height: 1.55;
-    transition: color 0.2s, text-decoration 0.2s;
-  }
-
-  .del-checkbox:checked + .del-text {
-    text-decoration: line-through;
-    color: var(--text3);
-  }
+  .note-box b { color: #7A3D06; }
 
   /* CRONOGRAMA */
   .schedule-wrap { overflow-x: auto; }
+  table.sched { width: 100%; border-collapse: collapse; font-size: 11px; min-width: 980px; }
+  .sched th { padding: 6px 4px; text-align: center; font-weight: 500; color: var(--text3); border-bottom: 1px solid var(--border); font-family: 'DM Mono', monospace; font-size: 10px; }
+  .sched th.lbl-col { text-align: left; min-width: 250px; padding-right: 12px; font-size: 10px; }
+  .sched th.month-th { font-size: 11px; font-weight: 600; color: var(--text2); border-bottom: 1px solid var(--border2); }
+  .sched td { padding: 3px 2px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  .sched td.lbl-col { font-size: 11px; color: var(--text); padding-right: 12px; white-space: nowrap; }
+  .sched td.lbl-col.is-ws { font-weight: 700; color: var(--text); }
+  .sched td.lbl-col.is-del { font-weight: 700; color: var(--orange-dark); }
+  .sched td.lbl-col.is-final { font-weight: 700; color: var(--orange-dark); }
+  .sched td.area-col { white-space: nowrap; padding: 3px 6px; }
+  .bar { height: 12px; border-radius: 2px; }
 
-  table.sched {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 11px;
-    min-width: 900px;
-  }
+  .legend-row { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 16px; }
+  .legend-item { display: flex; align-items: center; gap: 5px; font-size: 10px; color: var(--text3); font-family: 'DM Mono', monospace; }
+  .legend-bar { width: 18px; height: 8px; border-radius: 2px; }
 
-  .sched th {
-    padding: 6px 4px;
-    text-align: center;
-    font-weight: 500;
-    color: var(--text3);
-    border-bottom: 1px solid var(--border);
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-  }
-
-  .sched th.lbl-col {
-    text-align: left;
-    min-width: 220px;
-    padding-right: 12px;
-    font-size: 10px;
-  }
-
-  .sched th.month-th {
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--text2);
-    border-bottom: 1px solid var(--border2);
-  }
-
-  .sched td {
-    padding: 3px 2px;
-    border-bottom: 1px solid var(--border);
-    vertical-align: middle;
-  }
-
-  .sched td.lbl-col {
-    font-size: 11px;
-    color: var(--text);
-    padding-right: 12px;
-    white-space: nowrap;
-  }
-
-  .sched td.lbl-col.is-ws {
-    font-weight: 700;
-    color: var(--text);
-  }
-
-  .sched td.lbl-col.is-final {
-    font-weight: 700;
-    color: var(--purple-dark);
-  }
-
-  .sched td.area-col {
-    white-space: nowrap;
-    padding: 3px 6px;
-  }
-
-  .bar {
-    height: 12px;
-    border-radius: 2px;
-  }
-
-  .bg-p1 { background: var(--orange); }
-  .bg-p2 { background: var(--green); }
-  .bg-p3 { background: var(--blue); }
-  .bg-p4 { background: var(--pink); }
-  .bg-p5 { background: var(--purple); }
-  .bg-ws { background: var(--amber); }
-
-  .month-stripe-odd  { background: rgba(0,0,0,0.02); }
-  .month-stripe-even { background: transparent; }
-
-  .legend-row {
-    display: flex;
-    gap: 14px;
-    flex-wrap: wrap;
-    margin-bottom: 16px;
-  }
-
-  .legend-item {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 10px;
-    color: var(--text3);
-    font-family: 'DM Mono', monospace;
-  }
-
-  .legend-bar {
-    width: 18px;
-    height: 8px;
-    border-radius: 2px;
-  }
-
-  .milestones {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0,1fr));
-    gap: 8px;
-    margin-top: 20px;
-  }
-
-  .milestone {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-left: 3px solid var(--amber);
-    border-radius: 0 8px 8px 0;
-    padding: 10px 14px;
-  }
-
-  .milestone.final {
-    border-left-color: #E36523;
-    grid-column: span 2;
-  }
-
-  .milestone-title {
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 3px;
-  }
-
-  .milestone-meta {
-    font-size: 10px;
-    color: var(--text3);
-    font-family: 'DM Mono', monospace;
-  }
+  .milestones { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px; margin-top: 20px; }
+  .milestone { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--orange-mid); border-radius: 0 8px 8px 0; padding: 10px 14px; }
+  .milestone.kick { border-left-color: #9D8A80; }
+  .milestone.del { border-left-color: #E36523; }
+  .milestone.final { border-left-color: #6F2617; grid-column: span 2; background:#F7EDEB; }
+  .milestone-title { font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+  .milestone-meta { font-size: 10px; color: var(--text3); font-family: 'DM Mono', monospace; }
 
   /* CARGA */
   .load-section { margin-bottom: 20px; }
+  .load-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .load-bars { display: grid; grid-template-columns: repeat(24, minmax(0,1fr)); gap: 2px; }
+  .load-cell { height: 26px; border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 600; font-family: 'DM Mono', monospace; }
+  .load-legend { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 16px; }
 
-  .load-header {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 6px;
-  }
-
-  .load-bars {
-    display: grid;
-    grid-template-columns: repeat(24, minmax(0,1fr));
-    gap: 2px;
-  }
-
-  .load-cell {
-    height: 26px;
-    border-radius: 3px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 9px;
-    font-weight: 600;
-    font-family: 'DM Mono', monospace;
-  }
-
-  .lc-low  { background: #F5F1EE; color: #5A5651; }
-  .lc-med  { background: #FEF4E6; color: #7A3D06; }
-  .lc-high { background: #FDF0E8; color: #6F2617; }
-  .lc-peak { background: #E36523; color: #fff; }
-
-  .month-header-bar {
-    display: grid;
-    grid-template-columns: repeat(24, minmax(0,1fr));
-    gap: 2px;
-    margin-bottom: 6px;
-  }
-
-  .mhb-cell {
-    font-size: 9px;
-    color: var(--text3);
-    font-family: 'DM Mono', monospace;
-    text-align: center;
-  }
-
-  .area-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 11px;
-    margin-top: 24px;
-  }
-
-  .area-table th {
-    padding: 8px 12px;
-    text-align: left;
-    font-size: 10px;
-    font-weight: 600;
-    color: var(--text3);
-    border-bottom: 1px solid var(--border2);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    font-family: 'DM Mono', monospace;
-  }
-
-  .area-table td {
-    padding: 9px 12px;
-    border-bottom: 1px solid var(--border);
-    vertical-align: middle;
-  }
-
+  .area-table { width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 24px; }
+  .area-table th { padding: 8px 12px; text-align: left; font-size: 10px; font-weight: 600; color: var(--text3); border-bottom: 1px solid var(--border2); text-transform: uppercase; letter-spacing: 0.05em; font-family: 'DM Mono', monospace; }
+  .area-table td { padding: 9px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
   .area-table tr:last-child td { border-bottom: none; }
-
   .area-table tr:hover td { background: var(--surface2); }
 
-  .load-legend {
-    display: flex;
-    gap: 14px;
-    flex-wrap: wrap;
-    margin-top: 16px;
-  }
+  .section-label { font-size: 10px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.07em; font-family: 'DM Mono', monospace; margin: 20px 0 10px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
 
-  .section-label {
-    font-size: 10px;
-    font-weight: 600;
-    color: var(--text3);
-    text-transform: uppercase;
-    letter-spacing: 0.07em;
-    font-family: 'DM Mono', monospace;
-    margin: 20px 0 10px;
-    padding-bottom: 6px;
-    border-bottom: 1px solid var(--border);
-  }
+  /* COBERTURA RFP */
+  .cov-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+  .cov-table th { padding: 8px 10px; text-align: left; font-size: 10px; font-weight: 600; color: var(--text3); border-bottom: 1px solid var(--border2); text-transform: uppercase; letter-spacing: 0.05em; font-family: 'DM Mono', monospace; }
+  .cov-table td { padding: 9px 10px; border-bottom: 1px solid var(--border); vertical-align: top; font-size: 11px; }
+  .cov-table tr:hover td { background: var(--surface2); }
+  .cov-ok { color: #2E7D32; font-weight: 600; font-family:'DM Mono',monospace; font-size:10px; }
+  .cov-plus { color: #E36523; font-weight: 600; font-family:'DM Mono',monospace; font-size:10px; }
+  .cov-cat { font-family:'DM Mono',monospace; font-size:10px; color:var(--text3); }
 </style>
-</head>
-<body>
+</head><body>
 
 <div class="page-header">
   <div>
-    <h1>Painel PMO — Planejamento Estratégico-Regulatório</h1>
+    <h1>Painel PMO — Plano Estratégico-Regulatório 2027–2031</h1>
     <div class="subtitle">State Grid Brazil Holding · Thymos Energia · THE-P-3087-2026 · São Paulo, 2026</div>
   </div>
   <div class="header-meta">
-    <span class="chip">6 meses · 24 semanas</span>
-    <span class="chip">15 macro atividades</span>
-    <span class="chip accent">R$ 550.000</span>
+    <span class="chip">≈24 semanas · Kick-off 22/06/2026</span>
+    <span class="chip">5 fases · 5 entregáveis</span>
+    <span class="chip contact">PMO: Ariane Paixão · ariane.paixao@thymosenergia.com.br</span>
   </div>
 </div>
 
 <div class="container">
 
   <div class="metrics">
-    <div class="metric">
-      <div class="metric-label">Duração</div>
-      <div class="metric-value">24</div>
-      <div class="metric-sub">semanas / 6 meses</div>
-    </div>
-    <div class="metric">
-      <div class="metric-label">Produtos</div>
-      <div class="metric-value">5</div>
-      <div class="metric-sub">entregáveis principais</div>
-    </div>
-    <div class="metric">
-      <div class="metric-label">Workshops</div>
-      <div class="metric-value">4</div>
-      <div class="metric-sub">intermediários + entrega final</div>
-    </div>
-    <div class="metric">
-      <div class="metric-label">Horas est.</div>
-      <div class="metric-value">~2.230</div>
-      <div class="metric-sub">6 áreas envolvidas</div>
-    </div>
-    <div class="metric">
-      <div class="metric-label">Concessões</div>
-      <div class="metric-value">27</div>
-      <div class="metric-sub">concessionárias SGBH</div>
-    </div>
+    <div class="metric"><div class="metric-label">Duração</div><div class="metric-value">24</div><div class="metric-sub">semanas · Jun–Dez 2026</div></div>
+    <div class="metric"><div class="metric-label">Fases</div><div class="metric-value">5</div><div class="metric-sub">diagnóstico → relatório final</div></div>
+    <div class="metric"><div class="metric-label">Entregáveis</div><div class="metric-value">5</div><div class="metric-sub">+ apresentação ao Conselho</div></div>
+    <div class="metric"><div class="metric-label">Workshops</div><div class="metric-value">4</div><div class="metric-sub">validação + Conselho</div></div>
+    <div class="metric"><div class="metric-label">Concessões</div><div class="metric-value">26</div><div class="metric-sub">portfólio SGBH</div></div>
   </div>
 
   <div class="tabs">
-    <button class="tab-btn active" onclick="showTab('entregas', this)">Entregas por produto</button>
+    <button class="tab-btn active" onclick="showTab('entregas', this)">Entregas por fase</button>
     <button class="tab-btn" onclick="showTab('cronograma', this)">Cronograma</button>
     <button class="tab-btn" onclick="showTab('carga', this)">Carga por área</button>
+    <button class="tab-btn" onclick="showTab('cobertura', this)">Cobertura da RFP</button>
   </div>
-
-  <div id="tab-entregas" class="section active">
-
-    <div class="prod-section">
-      <div class="prod-header">
-        <span class="badge badge-p1">P1</span>
-        <h2>Diagnóstico e Radar Regulatório</h2>
-        <span style="font-size:10px; color:var(--text3);">M1–M2 · Etapa 1</span>
-      </div>
-      <div class="scope-grid">
-
-        <div class="scope-card">
-          <div class="scope-card-header">
-            <span class="badge badge-reg">Regulatório</span>
-            <span>Assuntos Regulatórios</span>
-          </div>
-          <div class="scope-card-meta">Resp.: Assuntos Regulatórios</div>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-reg"><span class="del-text">Levantamento do arcabouço normativo aplicável a cada concessão: leis, resoluções ANEEL, normas ONS/EPE e contratos de concessão</span></label>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-reg"><span class="del-text">Agenda regulatória prioritária: calendário de audiências públicas, consultas e marcos institucionais 2026–2031 com impacto no portfólio</span></label>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-reg"><span class="del-text">Radar regulatório de fatores externos: monitoramento sistemático de alterações em leis, regulamentos e planos plurianuais</span></label>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-reg"><span class="del-text">Mapeamento de precedentes e temas críticos regulatórios com impacto potencial no portfólio SGBH</span></label>
-        </div>
-
-        <div class="scope-card">
-          <div class="scope-card-header">
-            <span class="badge badge-tar">Tarifário</span>
-            <span>Regulação e Tarifas</span>
-          </div>
-          <div class="scope-card-meta">Resp.: Regulação e Tarifas</div>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-tar"><span class="del-text">Fichas analíticas tarifárias por concessão (25 fichas): RAP vigente, composição, histórico de reajustes e revisões periódicas, ciclo tarifário</span></label>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-tar"><span class="del-text">Consolidação da visão tarifária por ativo e por holding: mapa de exposição RAP do portfólio consolidado</span></label>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-tar"><span class="del-text">Benchmarking setorial de RAP: comparativo tarifário com outras concessionárias de transmissão do Brasil</span></label>
-        </div>
-
-        <div class="scope-card">
-          <div class="scope-card-header">
-            <span class="badge badge-fin">Financeiro</span>
-            <span>Consultoria Financeira</span>
-          </div>
-          <div class="scope-card-meta">Resp.: Consultoria Financeira · Apoio: Novos Negócios</div>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-fin"><span class="del-text">Mapa de exposição financeira do portfólio: classificação dos ativos por materialidade (RAP, prazo residual, risco regulatório)</span></label>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-fin"><span class="del-text">Análise preliminar de riscos e oportunidades com dimensionamento financeiro por concessão</span></label>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-fin"><span class="del-text">Visão consolidada de portfólio: mapa dos 25 ativos com ciclo de vida, fase de implantação e dependências operacionais</span></label>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-fin"><span class="del-text">Classificação de materialidade: matriz de priorização dos ativos por relevância estratégica e regulatória</span></label>
-        </div>
-
-      </div>
-    </div>
-
-    <div class="prod-section">
-      <div class="prod-header">
-        <span class="badge badge-p2">P2</span>
-        <h2>Estratégia de Otimização do Portfólio — RAP e Reforços/Melhorias</h2>
-        <span style="font-size:10px; color:var(--text3);">M2–M4 · Etapas 2 e 3</span>
-      </div>
-      <div class="scope-grid">
-
-        <div class="scope-card">
-          <div class="scope-card-header">
-            <span class="badge badge-reg">Regulatório</span>
-            <span>Assuntos Regulatórios</span>
-          </div>
-          <div class="scope-card-meta">Resp.: Assuntos Regulatórios</div>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-reg"><span class="del-text">Matriz de risco regulatório: probabilidade × impacto por alavanca, precedentes ANEEL e janelas de atuação institucional</span></label>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-reg"><span class="del-text">Análise de precedentes, benchmarks regulatórios e tendências de tratamento de RAP por tipo de concessão</span></label>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-reg"><span class="del-text">Mapeamento de elegibilidade regulatória de reforços e melhorias: interfaces com ONS, EPE, ANEEL e MME</span></label>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-reg"><span class="del-text">Roadmap de estratégia de reforços: sequenciamento de submissões e rito regulatório aplicável a cada iniciativa</span></label>
-        </div>
-
-        <div class="scope-card">
-          <div class="scope-card-header">
-            <span class="badge badge-tar">Tarifário</span>
-            <span>Regulação e Tarifas</span>
-          </div>
-          <div class="scope-card-meta">Resp.: Regulação e Tarifas</div>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-tar"><span class="del-text">Estratégia de Otimização da RAP 2027–2031: decomposição da RAP por concessionária, alavancas tarifárias (IRT, revisão periódica, reforços elegíveis, recálculo)</span></label>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-tar"><span class="del-text">Agenda de atuação tarifária: priorização de ações por ciclo de revisão e impacto estimado na RAP</span></label>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-tar"><span class="del-text">Pipeline de Reforços e Melhorias: mapeamento, critérios de priorização por materialidade tarifária e viabilidade</span></label>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-tar"><span class="del-text">Histórico de reajustes e revisões por concessão: reconstrução e análise crítica de aderência regulatória</span></label>
-        </div>
-
-        <div class="scope-card">
-          <div class="scope-card-header">
-            <span class="badge badge-fin">Financeiro</span>
-            <span>Consultoria Financeira · Preços e Mercado</span>
-          </div>
-          <div class="scope-card-meta">Resp.: Consultoria Financeira · Apoio: Preços e Mercado · Novos Negócios</div>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-fin"><span class="del-text">Matriz de materialidade financeira: estimativa de impacto em R$ de cada alavanca regulatória/tarifária sobre a RAP consolidada</span></label>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-fin"><span class="del-text">Análises de sensibilidade: cenários de variação de RAP por tipo de revisão, com impacto em EBITDA e retorno do portfólio</span></label>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-fin"><span class="del-text">Comparativo econômico-financeiro entre projetos de reforços/melhorias: TIR regulatória, payback e risco de não aprovação</span></label>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-fin"><span class="del-text">Subsídios técnicos: avaliação de maturidade técnica de iniciativas, dependências operacionais e prontidão documental</span></label>
-        </div>
-
-      </div>
-    </div>
-
-    <div class="prod-section">
-      <div class="prod-header">
-        <span class="badge badge-p3">P3</span>
-        <h2>Estratégia para Concessões Vincendas + Estudo 2030</h2>
-        <span style="font-size:10px; color:var(--text3);">M3–M4 · Etapa 4</span>
-      </div>
-      <div class="scope-grid">
-
-        <div class="scope-card">
-          <div class="scope-card-header">
-            <span class="badge badge-reg">Regulatório</span>
-            <span>Assuntos Regulatórios</span>
-          </div>
-          <div class="scope-card-meta">Resp.: Assuntos Regulatórios</div>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-reg"><span class="del-text">Estrutura estratégica para concessões vincendas: análise de precedentes, jurisprudência regulatória e alternativas de renovação, relicitação e reversão</span></label>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-reg"><span class="del-text">Posicionamento institucional recomendado: estratégia de atuação junto à ANEEL e demais órgãos para cada cenário de vencimento</span></label>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-reg"><span class="del-text">Caderno regulatório da concessão 2030: leitura normativa e institucional aprofundada, levantamento de precedentes específicos e caminhos regulatórios possíveis</span></label>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-reg"><span class="del-text">Diretrizes de prontidão regulatória: checklist de requisitos documentais e operacionais para cada cenário de vencimento</span></label>
-        </div>
-
-        <div class="scope-card">
-          <div class="scope-card-header">
-            <span class="badge badge-tar">Tarifário</span>
-            <span>Regulação e Tarifas</span>
-          </div>
-          <div class="scope-card-meta">Resp.: Regulação e Tarifas</div>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-tar"><span class="del-text">Mapeamento tarifário de concessões vincendas: impactos na RAP por cenário (renovação, relicitação, reversão) e implicações sobre a receita consolidada da holding</span></label>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-tar"><span class="del-text">Revisão contratual e regulatória da concessão 2030: reconstrução histórica tarifária e análise dos caminhos possíveis sob ótica tarifária</span></label>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-tar"><span class="del-text">Cenários tarifários para concessões vincendas: impacto estimado de cada caminho na RAP futura e na competitividade em novos leilões</span></label>
-        </div>
-
-        <div class="scope-card">
-          <div class="scope-card-header">
-            <span class="badge badge-fin">Financeiro</span>
-            <span>Consultoria Financeira · Novos Negócios</span>
-          </div>
-          <div class="scope-card-meta">Resp.: Consultoria Financeira · Apoio: Novos Negócios</div>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-fin"><span class="del-text">Comparativo econômico-financeiro de cenários: geração de valor, impacto em dívida e retorno ao acionista por cenário para concessões vincendas</span></label>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-fin"><span class="del-text">Estudo estratégico de valor da concessão 2030: materialidade de cada caminho, avaliação de ativos indenizáveis e implicações sobre estrutura de capital</span></label>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-fin"><span class="del-text">Subsídios técnicos e recomendações executivas: avaliação de ativos físicos, prontidão documental por cenário de vencimento</span></label>
-        </div>
-
-      </div>
-    </div>
-
-    <div class="prod-section">
-      <div class="prod-header">
-        <span class="badge badge-p4">P4</span>
-        <h2>Otimização de Ferramentas, Governança e Estrutura Interna</h2>
-        <span style="font-size:10px; color:var(--text3);">M4–M5 · Etapas 5 e 6</span>
-      </div>
-      <div class="scope-grid">
-
-        <div class="scope-card">
-          <div class="scope-card-header">
-            <span class="badge badge-reg">Regulatório</span>
-            <span>Assuntos Regulatórios</span>
-          </div>
-          <div class="scope-card-meta">Resp.: Assuntos Regulatórios</div>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-reg"><span class="del-text">Modelo de gestão regulatória: papéis centrais (holding) vs. locais (concessionárias), processos de interface com ANEEL, ONS, EPE e MME</span></label>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-reg"><span class="del-text">Mapeamento de lacunas regulatórias: diagnóstico das práticas atuais e requisitos funcionais para controle regulatório 2027–2031</span></label>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-reg"><span class="del-text">Modelo de governança regulatória: estrutura de comitês, fluxos de decisão, canais de articulação externa e lógica de escalação</span></label>
-        </div>
-
-        <div class="scope-card">
-          <div class="scope-card-header">
-            <span class="badge badge-tar">Tarifário</span>
-            <span>Regulação e Tarifas</span>
-          </div>
-          <div class="scope-card-meta">Resp.: Regulação e Tarifas</div>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-tar"><span class="del-text">Mapeamento de necessidades tarifárias: identificação de lacunas em ferramentas de controle, simulação e acompanhamento de ciclos tarifários</span></label>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-tar"><span class="del-text">Aderência do ferramental ao ciclo regulatório-tarifário: avaliação de soluções disponíveis no mercado para gestão de RAP e reajustes</span></label>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-tar"><span class="del-text">Benchmarking de práticas tarifárias: comparativo com outras grandes holdings de transmissão no Brasil e oportunidades de otimização</span></label>
-        </div>
-
-        <div class="scope-card">
-          <div class="scope-card-header">
-            <span class="badge badge-gest">Gestão</span>
-            <span>Novos Negócios · Financeiro</span>
-          </div>
-          <div class="scope-card-meta">Resp.: Novos Negócios · Apoio: Consultoria Financeira</div>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-gest"><span class="del-text">Framework de KPIs regulatórios e tarifários: painel de indicadores para holding e concessionárias, com frequência e responsáveis</span></label>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-gest"><span class="del-text">Análise custo-benefício de ferramentas de gestão regulatória: roadmap de implantação priorizado com estimativa de esforço e investimento</span></label>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-gest"><span class="del-text">Roadmap organizacional: sequenciamento de capacidades críticas e priorização de iniciativas de governança</span></label>
-        </div>
-
-      </div>
-    </div>
-
-    <div class="prod-section">
-      <div class="prod-header">
-        <span class="badge badge-p5">P5</span>
-        <h2>Plano Estratégico-Regulatório Integrado 2027–2031</h2>
-        <span style="font-size:10px; color:var(--text3);">M5–M6 · Etapa Final</span>
-      </div>
-      <div class="scope-grid">
-
-        <div class="scope-card">
-          <div class="scope-card-header">
-            <span class="badge badge-reg">Regulatório</span>
-            <span>Assuntos Regulatórios · Tarifas</span>
-          </div>
-          <div class="scope-card-meta">Resp.: Assuntos Regulatórios + Regulação e Tarifas</div>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-reg"><span class="del-text">Validação regulatória do plano integrado: consistência dos cenários e recomendações com arcabouço normativo vigente e perspectivas de alteração</span></label>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-reg"><span class="del-text">Roadmap regulatório 2027–2031: sequenciamento de ações, marcos, responsáveis e janelas de atuação junto à ANEEL e demais instituições</span></label>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-reg"><span class="del-text">Validação tarifária final: consistência das estratégias de otimização de RAP com ciclos e premissas regulatórias confirmadas</span></label>
-        </div>
-
-        <div class="scope-card">
-          <div class="scope-card-header">
-            <span class="badge badge-fin">Financeiro</span>
-            <span>Consultoria Financeira</span>
-          </div>
-          <div class="scope-card-meta">Resp.: Consultoria Financeira</div>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-fin"><span class="del-text">Painel executivo de priorização econômico-financeira: trade-offs entre iniciativas, impacto em resultados, dívida e retorno ao acionista (1, 3 e 5 anos)</span></label>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-fin"><span class="del-text">Sumário executivo de materialidade: síntese dos principais achados financeiros para apresentação ao conselho e alta administração</span></label>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-fin"><span class="del-text">Qualificação de implicações para resultados, dívida e retorno ao acionista — narrativa executiva de priorização e trade-offs estratégicos</span></label>
-        </div>
-
-        <div class="scope-card">
-          <div class="scope-card-header">
-            <span class="badge badge-gest">Gestão</span>
-            <span>Todas as áreas</span>
-          </div>
-          <div class="scope-card-meta">Resp.: Todas as áreas · Coordenação: PMO</div>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-gest"><span class="del-text">Plano Estratégico-Regulatório Integrado 5 anos: documento consolidado com prioridades, carteira de iniciativas, roadmap e diretrizes de acompanhamento</span></label>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-gest"><span class="del-text">Apresentação executiva ao conselho e alta administração: deck com visão consolidada, prioridades e recomendações acionáveis</span></label>
-          <label class="del-item"><input type="checkbox" class="del-checkbox cb-gest"><span class="del-text">Estrutura de monitoramento pós-entrega: processo de radar regulatório, indicadores e benchmarks para continuidade da gestão pelo cliente</span></label>
-        </div>
-
-      </div>
-    </div>
-
-  </div><div id="tab-cronograma" class="section">
+<div id="tab-entregas" class="section active"><div class="legend-row" style="margin-bottom:20px;"><div class="legend-item"><span class="badge badge-tar">Tarifas</span> Regulação Econômica</div><div class="legend-item"><span class="badge badge-reg">Regulatório</span> Regulatório</div><div class="legend-item"><span class="badge badge-fin">Financeiro</span> Consultoria Financeira</div><div class="legend-item"><span class="badge badge-gest">Novos Neg.</span> Novos Negócios (pontual)</div><div class="legend-item"><span class="badge badge-pmo">PMO</span> Gestão do projeto</div></div><div class="prod-section"><div class="prod-header"><span class="badge badge-f1">Fase 1</span><h2>Mapeamento e Diagnóstico do Portfólio Regulatório</h2><span class="prod-dates">Sem 1–5 · Entrega 20–24/07 · WS1 29/07 · RFP 3.1</span></div><div class="scope-grid"><div class="scope-card"><div class="scope-card-header"><span class="badge badge-tar">Tarifas</span></div><div class="scope-card-meta">Resp.: Regulação Econômica (Tarifas)</div><div class="del-item"><div class="del-dot dot-tar"></div><div class="del-text"><b>Fichas analíticas tarifárias — 26 fichas:</b> por concessão, levantar REH vigente, RAP atual e composição, histórico de reajustes (IRT) e revisões periódicas, e ciclo tarifário (próxima data de revisão). Fonte: REHs e Notas Técnicas ANEEL. Produto: planilha-mãe + ficha individual.</div></div><div class="del-item"><div class="del-dot dot-tar"></div><div class="del-text"><b>Mapa de exposição RAP do portfólio:</b> visão holding — RAP total, concentração por concessionária e exposição por ciclo tarifário. Produto: painel consolidado.</div></div><div class="del-item"><div class="del-dot dot-tar"></div><div class="del-text">Nesta fase o histórico de reajustes é apenas levantado como dado-base; a análise crítica de aderência ocorre na Fase 2.</div></div></div><div class="scope-card"><div class="scope-card-header"><span class="badge badge-reg">Regulatório</span></div><div class="scope-card-meta">Resp.: Regulatório</div><div class="del-item"><div class="del-dot dot-reg"></div><div class="del-text"><b>Arcabouço normativo técnico por concessão:</b> contratos, Procedimentos de Rede (ONS), normas técnicas e requisitos de qualidade/disponibilidade.</div></div><div class="del-item"><div class="del-dot dot-reg"></div><div class="del-text"><b>Radar regulatório + lista de elementos externos:</b> agenda ANEEL 2026–2031, audiências/consultas públicas, leis, normas e planos plurianuais sujeitos a mudança (entregável RFP).</div></div><div class="del-item"><div class="del-dot dot-reg"></div><div class="del-text"><b>Novas tecnologias / tendências / receitas:</b> mapeamento de BESS, SSC, serviços ancilares e tecnologias de suporte como vetores de receita.</div></div><div class="del-item"><div class="del-dot dot-reg"></div><div class="del-text"><b>Precedentes e temas técnicos críticos:</b> com impacto potencial no portfólio.</div></div></div><div class="scope-card"><div class="scope-card-header"><span class="badge badge-fin">Financeiro</span></div><div class="scope-card-meta">Resp.: Consultoria Financeira</div><div class="del-item"><div class="del-dot dot-fin"></div><div class="del-text"><b>Visão consolidada de portfólio:</b> mapa dos 26 ativos com fase de implantação, ciclo de vida e dependências operacionais.</div></div><div class="del-item"><div class="del-dot dot-fin"></div><div class="del-text"><b>Mapa de exposição financeira:</b> classificação dos ativos por materialidade — RAP, prazo residual e risco regulatório.</div></div></div><div class="scope-card"><div class="scope-card-header"><span class="badge badge-gest">Novos Neg.</span> <span class="tag-apoio">APOIO PONTUAL</span></div><div class="scope-card-meta">Resp.: Novos Negócios — apoio ao Regulatório</div><div class="del-item"><div class="del-dot dot-gest"></div><div class="del-text"><b>Apoio ao mapeamento de tecnologias de receita:</b> tecnologias emergentes (BESS, SSC, serviços ancilares) e leitura de maturidade técnica dos ativos para reforços.</div></div></div><div class="scope-card"><div class="scope-card-header"><span class="badge badge-pmo">PMO</span></div><div class="scope-card-meta">Resp.: PMO · com todas as áreas e a State Grid</div><div class="del-item"><div class="del-dot dot-gest"></div><div class="del-text"><b>Entrevistas com stakeholders:</b> rodada estruturada de entrevistas com as áreas internas (regulatório, tarifas, financeiro, O&M, jurídico) e mapeamento dos canais de articulação externa (ANEEL, ONS, EPE, MME) para calibrar o diagnóstico, validar prioridades e identificar dores e oportunidades.</div></div><div class="del-item"><div class="del-dot dot-gest"></div><div class="del-text"><b>Coleta de dados e documentação:</b> levantamento da base documental e contratual dos ativos que alimenta todas as demais frentes.</div></div></div></div></div><div class="prod-section"><div class="prod-header"><span class="badge badge-f2">Fase 2</span><h2>Riscos, Oportunidades e Materialidade</h2><span class="prod-dates">Sem 6–9 · Entrega 17–21/08 · WS2 26/08 · RFP 3.1 / 3.2</span></div><div class="scope-grid"><div class="scope-card"><div class="scope-card-header"><span class="badge badge-fin">Financeiro</span></div><div class="scope-card-meta">Resp.: Consultoria Financeira</div><div class="del-item"><div class="del-dot dot-fin"></div><div class="del-text"><b>Análise preliminar de riscos e oportunidades:</b> por concessão: riscos (revisão adversa, vencimento próximo, reforços pendentes) e oportunidades (recálculo favorável, reforços elegíveis não ativados), com dimensionamento financeiro de cada um.</div></div><div class="del-item"><div class="del-dot dot-fin"></div><div class="del-text"><b>Matriz de materialidade:</b> cruzamento de relevância estratégica × risco regulatório (matriz 2×2 / ranking ponderado) para priorização.</div></div></div><div class="scope-card"><div class="scope-card-header"><span class="badge badge-tar">Tarifas</span></div><div class="scope-card-meta">Resp.: Regulação Econômica (Tarifas)</div><div class="del-item"><div class="del-dot dot-tar"></div><div class="del-text"><b>Histórico de reajustes e revisões:</b> reconstrução de IRT e revisões periódicas por concessão, comparação com o que deveria ter sido aplicado e identificação de desvios de aderência regulatória. Produto: análise crítica por concessão.</div></div><div class="del-item"><div class="del-dot dot-tar"></div><div class="del-text"><b>Benchmarking setorial de RAP:</b> comparativo tarifário com outras transmissoras do Brasil.</div></div></div><div class="scope-card"><div class="scope-card-header"><span class="badge badge-reg">Regulatório</span></div><div class="scope-card-meta">Resp.: Regulatório</div><div class="del-item"><div class="del-dot dot-reg"></div><div class="del-text"><b>Matriz de risco regulatório técnico:</b> probabilidade × impacto por tema (Procedimentos de Rede, qualidade/disponibilidade, parcela variável).</div></div><div class="del-item"><div class="del-dot dot-reg"></div><div class="del-text"><b>Benchmarking de outras transmissoras:</b> práticas técnicas, governança regulatória e KPIs de referência.</div></div></div></div></div><div class="prod-section"><div class="prod-header"><span class="badge badge-f3">Fase 3</span><h2>Otimização da RAP e Reforços/Melhorias</h2><span class="prod-dates">Sem 10–14 · Entrega 21–25/09 · WS3 30/09 · RFP 3.2 / 3.3</span></div><div class="scope-grid"><div class="scope-card"><div class="scope-card-header"><span class="badge badge-tar">Tarifas</span></div><div class="scope-card-meta">Resp.: Regulação Econômica (Tarifas)</div><div class="del-item"><div class="del-dot dot-tar"></div><div class="del-text"><b>Estratégia de Otimização da RAP 2027–2031:</b> decompor a RAP por concessionária e mapear todas as alavancas — IRT, revisão periódica, reforços elegíveis e recálculo. Construir o roadmap de otimização, com prioridade em ativos existentes.</div></div><div class="del-item"><div class="del-dot dot-tar"></div><div class="del-text"><b>Pipeline de Reforços e Melhorias:</b> mapear projetos elegíveis por concessão; critérios de priorização por materialidade tarifária e viabilidade de aprovação. Mapeamento de sinergias com concessões próximas.</div></div></div><div class="scope-card"><div class="scope-card-header"><span class="badge badge-fin">Financeiro</span></div><div class="scope-card-meta">Resp.: Consultoria Financeira</div><div class="del-item"><div class="del-dot dot-fin"></div><div class="del-text"><b>Matriz de materialidade financeira:</b> para cada alavanca regulatória/tarifária, estimar o impacto em R$ sobre a RAP consolidada.</div></div><div class="del-item"><div class="del-dot dot-fin"></div><div class="del-text"><b>Análises de sensibilidade:</b> cenários de variação de RAP por tipo de revisão (pessimista / base / otimista), com impacto em EBITDA e retorno do portfólio.</div></div><div class="del-item"><div class="del-dot dot-fin"></div><div class="del-text"><b>Comparativo de reforços/melhorias:</b> TIR regulatória, payback e risco de não aprovação por projeto.</div></div></div><div class="scope-card"><div class="scope-card-header"><span class="badge badge-reg">Regulatório</span></div><div class="scope-card-meta">Resp.: Regulatório</div><div class="del-item"><div class="del-dot dot-reg"></div><div class="del-text"><b>Elegibilidade técnica e enquadramento de R&M:</b> rito de qualificação e aprovação, interfaces com ONS, EPE, ANEEL e MME.</div></div><div class="del-item"><div class="del-dot dot-reg"></div><div class="del-text"><b>Práticas contábeis, unitização e registro:</b> de imobilização/desmobilização (RFP 3.3).</div></div><div class="del-item"><div class="del-dot dot-reg"></div><div class="del-text"><b>Triagem de melhorias de grande porte:</b> e oportunidades associadas a novas tecnologias (BESS/SSC) em ativos existentes.</div></div></div></div></div><div class="prod-section"><div class="prod-header"><span class="badge badge-f4">Fase 4</span><h2>Concessões Vincendas, Estudo 2030, Software/IA e Governança</h2><span class="prod-dates">Sem 15–18 · Entrega 19–23/10 · WS4 28/10 · RFP 3.4 / 3.4.1 / 3.5 / 3.6</span></div><div class="scope-grid"><div class="scope-card"><div class="scope-card-header"><span class="badge badge-tar">Tarifas</span></div><div class="scope-card-meta">Resp.: Regulação Econômica (Tarifas)</div><div class="del-item"><div class="del-dot dot-tar"></div><div class="del-text"><b>Mapeamento tarifário de concessões vincendas:</b> impacto na RAP por cenário — renovação, relicitação e reversão — e na receita consolidada da holding. Cenário de renovação tratado como prioritário (diretriz State Grid: manutenção dos contratos).</div></div><div class="del-item"><div class="del-dot dot-tar"></div><div class="del-text"><b>Revisão contratual e tarifária da concessão 2030:</b> reconstrução histórica e caminhos sob a ótica tarifária; componente tarifário dos ativos indenizáveis.</div></div></div><div class="scope-card"><div class="scope-card-header"><span class="badge badge-fin">Financeiro</span></div><div class="scope-card-meta">Resp.: Consultoria Financeira</div><div class="del-item"><div class="del-dot dot-fin"></div><div class="del-text"><b>Comparativo econômico-financeiro de cenários de vincendas:</b> geração de valor, impacto em dívida e retorno ao acionista por cenário, integrado ao modelo financeiro consolidado.</div></div><div class="del-item"><div class="del-dot dot-fin"></div><div class="del-text"><b>Estudo estratégico de valor da concessão 2030:</b> materialidade de cada caminho, avaliação de ativos indenizáveis e implicações sobre a estrutura de capital.</div></div></div><div class="scope-card"><div class="scope-card-header"><span class="badge badge-reg">Regulatório</span></div><div class="scope-card-meta">Resp.: Regulatório</div><div class="del-item"><div class="del-dot dot-reg"></div><div class="del-text"><b>Estrutura estratégica para vincendas:</b> precedentes, jurisprudência regulatória e posicionamento institucional alinhado à diretriz de manutenção dos contratos. Sugestão de procedimentos para reversão, caso necessário.</div></div><div class="del-item"><div class="del-dot dot-reg"></div><div class="del-text"><b>Prontidão técnica e documental dos ativos:</b> checklist de dados e documentação dos ativos por cenário de vencimento.</div></div><div class="del-item"><div class="del-dot dot-reg"></div><div class="del-text"><b>Software / ferramentas + IA no regulatório (RFP 3.5):</b> análise de mercado de soluções, requisitos funcionais para controle, simulação e conformidade, e casos de uso de IA no regulatório de transmissão. Roteiro de implementação.</div></div></div><div class="scope-card"><div class="scope-card-header"><span class="badge badge-pmo">Governança</span></div><div class="scope-card-meta">Resp.: Regulatório + PMO · Apoio: Novos Negócios</div><div class="del-item"><div class="del-dot dot-reg"></div><div class="del-text"><b>Otimização da estrutura interna (RFP 3.6):</b> modelo de gestão regulatória — papéis centrais (holding) vs. locais, matriz RACI, processos-chave e fluxos de interface com ANEEL/ONS/EPE/MME.</div></div><div class="del-item"><div class="del-dot dot-reg"></div><div class="del-text"><b>Organização da governança:</b> comitês, fluxos de decisão, KPIs regulatórios e lógica de escalonamento.</div></div><div class="del-item"><div class="del-dot dot-gest"></div><div class="del-text"><b>Avaliação de leilões de terceiros:</b> participação em leilões de concessões de terceiros vincendas (RFP 3.4) — triagem de oportunidades e critérios de entrada.</div></div></div></div></div><div class="prod-section"><div class="prod-header"><span class="badge badge-f5">Fase 5</span><h2>Consolidação, Síntese Executiva e Relatório Final</h2><span class="prod-dates">Sem 19–23 · Entrega 23–27/11 · Conselho 02/12 · RFP 4</span></div><div class="scope-grid"><div class="scope-card"><div class="scope-card-header"><span class="badge badge-fin">Financeiro</span></div><div class="scope-card-meta">Resp.: Consultoria Financeira</div><div class="del-item"><div class="del-dot dot-fin"></div><div class="del-text"><b>Consolidação dos achados financeiros das Fases 1–4:</b> integração dos resultados de materialidade, sensibilidades, reforços e vincendas num modelo único.</div></div><div class="del-item"><div class="del-dot dot-fin"></div><div class="del-text"><b>Painel executivo de priorização:</b> trade-offs entre todas as iniciativas — impacto em resultados, dívida e retorno ao acionista nos horizontes de 1, 3 e 5 anos.</div></div><div class="del-item"><div class="del-dot dot-fin"></div><div class="del-text"><b>Sumário executivo de materialidade:</b> síntese dos principais achados financeiros.</div></div><div class="del-item"><div class="del-dot dot-fin"></div><div class="del-text"><b>Narrativa executiva de trade-offs:</b> qualificação das implicações para resultados, dívida e retorno ao acionista.</div></div></div><div class="scope-card"><div class="scope-card-header"><span class="badge badge-tar">Tarifas</span><span class="badge badge-reg">Regulatório</span></div><div class="scope-card-meta">Resp.: Regulação Econômica + Regulatório</div><div class="del-item"><div class="del-dot dot-tar"></div><div class="del-text"><b>Validação regulatória e tarifária do plano:</b> consistência dos cenários e recomendações com o arcabouço vigente e perspectivas de alteração.</div></div><div class="del-item"><div class="del-dot dot-reg"></div><div class="del-text"><b>Roadmap regulatório 2027–2031:</b> sequenciamento de ações, marcos, responsáveis e janelas de atuação junto a ANEEL/ONS/EPE/MME.</div></div><div class="del-item"><div class="del-dot dot-reg"></div><div class="del-text"><b>Recomendações executivas:</b> priorização e diretrizes acionáveis por frente.</div></div></div><div class="scope-card"><div class="scope-card-header"><span class="badge badge-pmo">PMO</span></div><div class="scope-card-meta">Resp.: Todas as áreas · Coordenação: PMO</div><div class="del-item"><div class="del-dot dot-gest"></div><div class="del-text"><b>Relatório Executivo Final + Plano Integrado 2027–2031:</b> consolidação das Fases 1–4: prioridades, carteira de iniciativas, roadmap, diretrizes de acompanhamento e governança.</div></div><div class="del-item"><div class="del-dot dot-gest"></div><div class="del-text"><b>Apresentação executiva ao Conselho:</b> deck com visão consolidada, prioridades e recomendações acionáveis.</div></div><div class="del-item"><div class="del-dot dot-gest"></div><div class="del-text"><b>Estrutura de monitoramento pós-entrega:</b> radar regulatório, KPIs e benchmarks para continuidade da gestão pelo cliente.</div></div></div></div></div></div>
+<!-- ══════════════ TAB 2 — CRONOGRAMA ══════════════ -->
+  <div id="tab-cronograma" class="section">
 
     <div class="legend-row">
-      <div class="legend-item"><div class="legend-bar" style="background:#E36523;"></div> P1 Diagnóstico</div>
-      <div class="legend-item"><div class="legend-bar" style="background:#FA8919;"></div> P2 Otimização RAP + Reforços</div>
-      <div class="legend-item"><div class="legend-bar" style="background:#36343A;"></div> P3 Concessões Vincendas</div>
-      <div class="legend-item"><div class="legend-bar" style="background:#9D8A80;"></div> P4 Ferramentas + Governança</div>
-      <div class="legend-item"><div class="legend-bar" style="background:#6F2617;"></div> P5 Plano Integrado</div>
-      <div class="legend-item"><div class="legend-bar" style="background:#FA8919;opacity:0.6;"></div> <strong>Workshop / Entrega Final</strong></div>
+      <div class="legend-item"><div class="legend-bar" style="background:#E36523;"></div> Fase 1 · Diagnóstico</div>
+      <div class="legend-item"><div class="legend-bar" style="background:#FA8919;"></div> Fase 2 · Riscos e Materialidade</div>
+      <div class="legend-item"><div class="legend-bar" style="background:#36343A;"></div> Fase 3 · Otimização RAP + R&M</div>
+      <div class="legend-item"><div class="legend-bar" style="background:#9D8A80;"></div> Fase 4 · Vincendas, 2030, Software, Gov.</div>
+      <div class="legend-item"><div class="legend-bar" style="background:#6F2617;"></div> Fase 5 · Consolidação e Relatório Final</div>
+      <div class="legend-item"><div class="legend-bar" style="background:#E36523;opacity:0.5;border:1px dashed #6F2617;"></div> <strong>Entrega (2ª–6ª feira)</strong></div>
+      <div class="legend-item"><div class="legend-bar" style="background:#FA8919;opacity:0.6;"></div> <strong>Workshop (semana seguinte)</strong></div>
     </div>
 
     <div class="schedule-wrap">
@@ -812,12 +256,12 @@
         <tr>
           <th class="lbl-col" rowspan="2">Atividade</th>
           <th class="lbl-col" rowspan="2" style="min-width:90px;">Áreas</th>
-          <th colspan="4" class="month-th" style="background:rgba(0,0,0,0.03);">M1</th>
-          <th colspan="4" class="month-th">M2</th>
-          <th colspan="4" class="month-th" style="background:rgba(0,0,0,0.03);">M3</th>
-          <th colspan="4" class="month-th">M4</th>
-          <th colspan="4" class="month-th" style="background:rgba(0,0,0,0.03);">M5</th>
-          <th colspan="4" class="month-th">M6</th>
+          <th colspan="4" class="month-th" style="background:rgba(0,0,0,0.03);">M1 · jul</th>
+          <th colspan="4" class="month-th">M2 · ago</th>
+          <th colspan="4" class="month-th" style="background:rgba(0,0,0,0.03);">M3 · set</th>
+          <th colspan="4" class="month-th">M4 · out</th>
+          <th colspan="4" class="month-th" style="background:rgba(0,0,0,0.03);">M5 · nov</th>
+          <th colspan="4" class="month-th">M6 · dez</th>
         </tr>
         <tr id="week-row"></tr>
       </thead>
@@ -825,35 +269,68 @@
     </table>
     </div>
 
-    <div class="section-label" style="margin-top:24px;">Workshops e marcos</div>
+    <div class="section-label" style="margin-top:24px;">Entregas (à esquerda) e workshops associados (à direita) — datas sugeridas</div>
     <div class="milestones">
-      <div class="milestone">
-        <div class="milestone-title">Workshop 1 — Diagnóstico e Levantamento Estratégico</div>
-        <div class="milestone-meta">Semana 6–7 · M2 · 2h · Validação de hipóteses e fichas analíticas</div>
+      <div class="milestone kick" style="grid-column:span 2;">
+        <div class="milestone-title">Kick-off do projeto</div>
+        <div class="milestone-meta">Segunda 22/06/2026 · Sem 1 · Alinhamento de escopo, entrevistas com stakeholders, dados e governança</div>
+      </div>
+
+      <div class="milestone del">
+        <div class="milestone-title">Entrega 1 — Diagnóstico do Portfólio Regulatório</div>
+        <div class="milestone-meta">2ª a 6ª: 20/07 → 24/07/2026 · Sem 5 · Fichas (26), exposição RAP e financeira, radar, entrevistas</div>
       </div>
       <div class="milestone">
-        <div class="milestone-title">Workshop 2 — Direcionadores Estratégicos e Cenários 5 anos</div>
-        <div class="milestone-meta">Semana 11–12 · M3 · 2h · Validação de cenários e trade-offs regulatórios</div>
+        <div class="milestone-title">Workshop 1 — Validação do diagnóstico</div>
+        <div class="milestone-meta">Quarta 29/07/2026 · Sem 6 · 2h · Semana seguinte à Entrega 1</div>
+      </div>
+
+      <div class="milestone del">
+        <div class="milestone-title">Entrega 2 — Riscos, Oportunidades e Materialidade</div>
+        <div class="milestone-meta">2ª a 6ª: 17/08 → 21/08/2026 · Sem 9 · Matriz de materialidade, histórico, benchmarking RAP</div>
       </div>
       <div class="milestone">
-        <div class="milestone-title">Workshop 3 — Priorização de Iniciativas e Roadmap Integrado</div>
-        <div class="milestone-meta">Semana 16–17 · M4/M5 · 2h · Validação de roadmap e KPIs</div>
+        <div class="milestone-title">Workshop 2 — Validação de riscos e materialidade</div>
+        <div class="milestone-meta">Quarta 26/08/2026 · Sem 10 · 2h · Semana seguinte à Entrega 2</div>
+      </div>
+
+      <div class="milestone del">
+        <div class="milestone-title">Entrega 3 — Otimização da RAP + Reforços/Melhorias</div>
+        <div class="milestone-meta">2ª a 6ª: 21/09 → 25/09/2026 · Sem 14 · Roadmap de RAP, pipeline e comparativo de R&M</div>
       </div>
       <div class="milestone">
-        <div class="milestone-title">Workshop 4 — KPIs, Governança e Consolidação Executiva</div>
-        <div class="milestone-meta">Semana 20 · M5 · 2h · Validação do plano integrado com stakeholders</div>
+        <div class="milestone-title">Workshop 3 — Validação da estratégia de RAP / R&M</div>
+        <div class="milestone-meta">Quarta 30/09/2026 · Sem 15 · 2h · Semana seguinte à Entrega 3</div>
       </div>
-      <div class="milestone final">
-        <div class="milestone-title">Entrega Final — Relatório Consolidado e Apresentação Executiva ao Conselho</div>
-        <div class="milestone-meta">Semana 24 · M6 · Todos os produtos integrados · Alta administração e conselho</div>
+
+      <div class="milestone del">
+        <div class="milestone-title">Entrega 4 — Vincendas, Estudo 2030, Software/IA e Governança</div>
+        <div class="milestone-meta">2ª a 6ª: 19/10 → 23/10/2026 · Sem 18 · Cenários de vincendas, ativo 2030, ferramentas e RACI</div>
+      </div>
+      <div class="milestone">
+        <div class="milestone-title">Workshop 4 — Validação de vincendas e governança</div>
+        <div class="milestone-meta">Quarta 28/10/2026 · Sem 19 · 2h · Semana seguinte à Entrega 4</div>
+      </div>
+
+      <div class="milestone del">
+        <div class="milestone-title">Entrega 5 — Relatório Executivo Final + Plano Integrado 2027–2031</div>
+        <div class="milestone-meta">2ª a 6ª: 23/11 → 27/11/2026 · Sem 23 · Consolidação das Fases 1–4 + deck executivo</div>
+      </div>
+      <div class="milestone final" style="grid-column:auto;background:#F7EDEB;">
+        <div class="milestone-title">Apresentação ao Conselho e Alta Administração</div>
+        <div class="milestone-meta">Quarta 02/12/2026 · Sem 24 · Semana seguinte à Entrega 5 · Encerramento</div>
       </div>
     </div>
 
-  </div><div id="tab-carga" class="section">
+  </div><!-- /tab-cronograma -->
 
-    <div class="section-label">Carga semanal estimada por área (horas/semana)</div>
+  
+<!-- ══════════════ TAB 3 — CARGA POR ÁREA ══════════════ -->
+  <div id="tab-carga" class="section">
 
-    <div class="month-header-bar" style="display:grid; grid-template-columns: repeat(24, minmax(0,1fr)); gap:2px; margin-bottom:4px;">
+    <div class="section-label">Carga semanal estimada por área (horas/semana) — 24 semanas</div>
+
+    <div style="display:grid; grid-template-columns: repeat(24, minmax(0,1fr)); gap:2px; margin-bottom:4px;">
       <div style="grid-column:span 4; font-size:9px; color:var(--text3); text-align:center; font-family:'DM Mono',monospace; border-right:1px solid var(--border);">M1</div>
       <div style="grid-column:span 4; font-size:9px; color:var(--text3); text-align:center; font-family:'DM Mono',monospace; border-right:1px solid var(--border);">M2</div>
       <div style="grid-column:span 4; font-size:9px; color:var(--text3); text-align:center; font-family:'DM Mono',monospace; border-right:1px solid var(--border);">M3</div>
@@ -868,7 +345,7 @@
       <div class="legend-item"><div style="width:14px;height:14px;border-radius:3px;background:#F5F1EE;border:1px solid #DDD9D3;"></div> Baixa ≤8h</div>
       <div class="legend-item"><div style="width:14px;height:14px;border-radius:3px;background:#FEF4E6;"></div> Média 9–16h</div>
       <div class="legend-item"><div style="width:14px;height:14px;border-radius:3px;background:#FDF0E8;"></div> Alta 17–24h</div>
-      <div class="legend-item"><div style="width:14px;height:14px;border-radius:3px;background:#E36523;"></div> Pico >24h</div>
+      <div class="legend-item"><div style="width:14px;height:14px;border-radius:3px;background:#E36523;"></div> Pico &gt;24h</div>
     </div>
 
     <div class="section-label" style="margin-top:24px;">Resumo por área — esforço total e fase crítica</div>
@@ -885,7 +362,52 @@
       <tbody id="area-tbody"></tbody>
     </table>
 
-</div></div><script>
+    <div class="note-box" style="margin-top:20px;">
+      <b>Foco do projeto:</b> a maior concentração de esforço está nas áreas <b>Consultoria Financeira</b> e <b>Regulação Econômica (Tarifas)</b>, conforme orientação. A <b>Regulatório</b> ganha protagonismo na Fase 4 (software/IA e governança) e na Fase 3 (elegibilidade de R&M). A área de <b>Preços e Mercado foi removida</b> do projeto. <b>Novos Negócios</b> entra de forma pontual: Fase 1 (mapeamento de BESS/SSC e tecnologias de receita) e Fase 4 (avaliação de leilões de terceiros).
+    </div>
+
+  </div><!-- /tab-carga -->
+
+  
+<!-- ══════════════ TAB 4 — COBERTURA DA RFP ══════════════ -->
+  <div id="tab-cobertura" class="section">
+    <div class="section-label">Rastreabilidade — escopo e entregáveis da RFP vs. produtos do painel</div>
+    <table class="cov-table">
+      <thead>
+        <tr>
+          <th style="width:30%;">Item da RFP / diretriz</th>
+          <th style="width:14%;">Onde é coberto</th>
+          <th style="width:24%;">Área responsável</th>
+          <th style="width:22%;">Produto / observação</th>
+          <th style="width:10%; text-align:center;">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="cov-cat">RFP 3.1</span><br>Mapeamento e diagnóstico do portfólio regulatório</td><td>Fase 1</td><td>Tarifas · Regulatório · Financeiro</td><td>Fichas (26), exposição RAP e financeira, radar regulatório</td><td style="text-align:center;"><span class="cov-ok">✓ Coberto</span></td></tr>
+        <tr><td><span class="cov-cat">RFP 3.2</span><br>Estratégia e otimização da RAP</td><td>Fase 3 (+ Fase 2)</td><td>Regulação Econômica · Financeiro</td><td>Roadmap de otimização + materialidade financeira</td><td style="text-align:center;"><span class="cov-ok">✓ Coberto</span></td></tr>
+        <tr><td><span class="cov-cat">RFP 3.3</span><br>Reforços e Melhorias (R&M)</td><td>Fase 3</td><td>Tarifas · Regulatório · Financeiro</td><td>Pipeline, critérios, contabilidade/unitização, TIR</td><td style="text-align:center;"><span class="cov-ok">✓ Coberto</span></td></tr>
+        <tr><td><span class="cov-cat">RFP 3.4</span><br>Concessões vincendas e renovações</td><td>Fase 4</td><td>Tarifas · Financeiro · Regulatório</td><td>3 cenários · diretriz: manutenção dos contratos</td><td style="text-align:center;"><span class="cov-ok">✓ Coberto</span></td></tr>
+        <tr><td><span class="cov-cat">RFP 3.4.1</span><br>Estudo da concessão com vencimento em 2030</td><td>Fase 4</td><td>Tarifas · Financeiro · Regulatório</td><td>Revisão contratual, ativos indenizáveis, valor</td><td style="text-align:center;"><span class="cov-ok">✓ Coberto</span></td></tr>
+        <tr><td><span class="cov-cat">RFP 3.5</span><br>Software/ferramentas de gestão regulatória</td><td>Fase 4</td><td>Regulatório · PMO</td><td>Análise de mercado + requisitos + roteiro (inclui IA)</td><td style="text-align:center;"><span class="cov-ok">✓ Coberto</span></td></tr>
+        <tr><td><span class="cov-cat">RFP 3.6</span><br>Otimização da estrutura interna</td><td>Fase 4</td><td>Regulatório · PMO</td><td>Modelo de gestão, RACI, KPIs, governança</td><td style="text-align:center;"><span class="cov-ok">✓ Coberto</span></td></tr>
+        <tr><td><span class="cov-cat">RFP 4</span><br>Lista de elementos externos sujeitos a mudança</td><td>Fase 1</td><td>Regulatório</td><td>Radar regulatório / monitoramento de mudanças</td><td style="text-align:center;"><span class="cov-ok">✓ Coberto</span></td></tr>
+        <tr><td><span class="cov-cat">RFP 4</span><br>Plano integrado 5 anos + apresentação executiva</td><td>Fase 5</td><td>Todas · PMO</td><td>Documento consolidado + deck ao Conselho</td><td style="text-align:center;"><span class="cov-ok">✓ Coberto</span></td></tr>
+        <tr><td><span class="cov-cat">State Grid</span><br>Manutenção dos contratos (vincendas)</td><td>Fase 4</td><td>Regulatório · Tarifas</td><td>Renovação como cenário prioritário</td><td style="text-align:center;"><span class="cov-plus">+ Incorporado</span></td></tr>
+        <tr><td><span class="cov-cat">State Grid</span><br>Novas tecnologias / receitas (BESS, SSC, suporte)</td><td>Fase 1</td><td>Regulatório · Novos Negócios</td><td>Mapeamento de vetores de receita</td><td style="text-align:center;"><span class="cov-plus">+ Incorporado</span></td></tr>
+        <tr><td><span class="cov-cat">State Grid</span><br>Benchmarking de outras transmissoras</td><td>Fase 2</td><td>Regulatório · Tarifas</td><td>Práticas, governança e KPIs de referência</td><td style="text-align:center;"><span class="cov-plus">+ Incorporado</span></td></tr>
+        <tr><td><span class="cov-cat">State Grid</span><br>Uso de IA no regulatório de transmissão</td><td>Fase 4</td><td>Regulatório</td><td>Casos de uso + roteiro junto a software</td><td style="text-align:center;"><span class="cov-plus">+ Incorporado</span></td></tr>
+        <tr><td><span class="cov-cat">State Grid</span><br>Organização da governança</td><td>Fase 4</td><td>Regulatório · PMO</td><td>Comitês, fluxos de decisão, escalonamento</td><td style="text-align:center;"><span class="cov-plus">+ Incorporado</span></td></tr>
+      </tbody>
+    </table>
+    <div class="note-box" style="margin-top:18px;">
+      Todos os itens de escopo (3.1 a 3.6) e os entregáveis da RFP estão cobertos pelos produtos do painel. As diretrizes adicionais passadas pela equipe regulatória da State Grid foram incorporadas como complementos às fases correspondentes (marcadas como <span class="cov-plus">+ Incorporado</span>).
+    </div>
+  </div><!-- /tab-cobertura -->
+
+
+</div><!-- /container -->
+
+<script>
   function showTab(id, btn) {
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -895,24 +417,35 @@
 
   /* ── GANTT ── */
   const activities = [
-    { name: "Kick-off + levantamento de portfólio",         start:1,  end:2,  type:"p1", areas:"Tar · Reg · Fin" },
-    { name: "Fichas analíticas + radar regulatório",         start:2,  end:4,  type:"p1", areas:"Reg · Tar" },
-    { name: "Workshop 1 — Diagnóstico estratégico",          start:6,  end:7,  type:"ws", areas:"Todas", ws:true },
-    { name: "Levantamento RAP + pipeline reforços",          start:5,  end:7,  type:"p2", areas:"Tar · Fin" },
-    { name: "Cenários iniciais e trade-offs RAP",            start:7,  end:9,  type:"p2", areas:"Tar · Reg · Fin" },
-    { name: "Mapeamento concessões vincendas + 2030",        start:9,  end:11, type:"p3", areas:"Reg · Tar · Fin" },
-    { name: "Workshop 2 — Cenários 5 anos",                  start:11, end:12, type:"ws", areas:"Todas", ws:true },
-    { name: "Consolidação cenários e priorização",           start:11, end:13, type:"p2", areas:"Tar · Reg · Fin" },
-    { name: "KPIs preliminares + modelo de operação",        start:13, end:14, type:"p4", areas:"Reg · Gest" },
-    { name: "Workshop 3 — Priorização + Roadmap",            start:16, end:17, type:"ws", areas:"Todas", ws:true },
-    { name: "Refinamento KPIs, roadmap e governança",        start:17, end:19, type:"p4", areas:"Reg · Gest · Fin" },
-    { name: "Consolidação preliminar de todos os produtos",  start:19, end:20, type:"p5", areas:"Todas" },
-    { name: "Workshop 4 — Governança + Consolidação",        start:20, end:20, type:"ws", areas:"Todas", ws:true },
-    { name: "Ajustes finais + relatório executivo",          start:21, end:23, type:"p5", areas:"Todas" },
-    { name: "Entrega Final + Apresentação ao Conselho",      start:24, end:24, type:"p5", areas:"Todas", final:true },
+    { name:"Kick-off, entrevistas com stakeholders e levantamento",        start:1,  end:2,  type:"f1", areas:"Tar · Reg · Fin" },
+    { name:"Fichas analíticas tarifárias (26) + exposição RAP",            start:1,  end:4,  type:"f1", areas:"Tar" },
+    { name:"Arcabouço técnico, radar e novas tecnologias (BESS/SSC)",       start:2,  end:5,  type:"f1", areas:"Reg" },
+    { name:"Visão consolidada e exposição financeira (26 ativos)",         start:2,  end:5,  type:"f1", areas:"Fin" },
+    { name:"▸ Entrega 1 — Diagnóstico do Portfólio (20–24/07)",            start:5,  end:5,  type:"del", areas:"—", del:true },
+    { name:"Workshop 1 — Validação do diagnóstico (29/07)",                 start:6,  end:6,  type:"ws", areas:"Todas", ws:true },
+    { name:"Riscos, oportunidades e matriz de materialidade",              start:6,  end:9,  type:"f2", areas:"Fin" },
+    { name:"Histórico de reajustes/revisões + benchmarking RAP",           start:6,  end:9,  type:"f2", areas:"Tar" },
+    { name:"Benchmarking de transmissoras + risco técnico",                start:6,  end:9,  type:"f2", areas:"Reg" },
+    { name:"▸ Entrega 2 — Riscos e Materialidade (17–21/08)",              start:9,  end:9,  type:"del", areas:"—", del:true },
+    { name:"Workshop 2 — Validação de riscos e materialidade (26/08)",      start:10, end:10, type:"ws", areas:"Todas", ws:true },
+    { name:"Estratégia de Otimização da RAP 2027–2031",                    start:10, end:14, type:"f3", areas:"Tar · Fin" },
+    { name:"Pipeline de reforços/melhorias + sinergias",                   start:10, end:14, type:"f3", areas:"Tar · Reg" },
+    { name:"Materialidade fin., sensibilidades e comparativo R&M",         start:11, end:14, type:"f3", areas:"Fin" },
+    { name:"▸ Entrega 3 — Otimização RAP + R&M (21–25/09)",                start:14, end:14, type:"del", areas:"—", del:true },
+    { name:"Workshop 3 — Validação RAP / R&M (30/09)",                      start:15, end:15, type:"ws", areas:"Todas", ws:true },
+    { name:"Vincendas + Estudo 2030 (tarifário e financeiro)",             start:15, end:18, type:"f4", areas:"Tar · Fin · Reg" },
+    { name:"Software/ferramentas + IA no regulatório",                     start:15, end:18, type:"f4", areas:"Reg" },
+    { name:"Governança, RACI, KPIs e estrutura interna",                   start:15, end:18, type:"f4", areas:"Reg · PMO" },
+    { name:"▸ Entrega 4 — Vincendas, 2030, Software/IA, Gov. (19–23/10)",  start:18, end:18, type:"del", areas:"—", del:true },
+    { name:"Workshop 4 — Validação vincendas/governança (28/10)",          start:19, end:19, type:"ws", areas:"Todas", ws:true },
+    { name:"Painel executivo de priorização + sumário materialidade",     start:19, end:22, type:"f5", areas:"Fin" },
+    { name:"Roadmap regulatório + validação integrada",                    start:19, end:22, type:"f5", areas:"Tar · Reg" },
+    { name:"Consolidação + Relatório Executivo Final + deck",              start:21, end:23, type:"f5", areas:"Todas" },
+    { name:"▸ Entrega 5 — Plano Integrado (23–27/11)",                     start:23, end:23, type:"del", areas:"—", del:true },
+    { name:"Apresentação ao Conselho (02/12)",                            start:24, end:24, type:"final", areas:"Todas", final:true },
   ];
 
-  const colors = { p1:"#E36523", p2:"#FA8919", p3:"#36343A", p4:"#9D8A80", p5:"#6F2617", ws:"#FA8919" };
+  const colors = { f1:"#E36523", f2:"#FA8919", f3:"#36343A", f4:"#9D8A80", f5:"#6F2617", ws:"#FA8919", del:"#E36523", final:"#6F2617" };
 
   const weekRow = document.getElementById('week-row');
   for (let w = 1; w <= 24; w++) {
@@ -928,8 +461,9 @@
     const tr = document.createElement('tr');
     let labelClass = 'lbl-col';
     if (a.ws) labelClass += ' is-ws';
+    if (a.del) labelClass += ' is-del';
     if (a.final) labelClass += ' is-final';
-    let nameHtml = a.ws || a.final ? `<strong>${a.name}</strong>` : a.name;
+    let nameHtml = (a.ws || a.final || a.del) ? `<strong>${a.name}</strong>` : a.name;
     let cells = `<td class="${labelClass}">${nameHtml}</td>`;
     cells += `<td class="area-col" style="font-size:10px; color:var(--text3); font-family:'DM Mono',monospace;">${a.areas}</td>`;
     for (let w = 1; w <= 24; w++) {
@@ -939,7 +473,9 @@
         const rL = w === a.start ? '3px 0 0 3px' : '0';
         const rR = w === a.end   ? '0 3px 3px 0' : '0';
         const r  = a.start === a.end ? '3px' : (rL !== '0' ? rL : rR);
-        cells += `<td style="${stripe} padding:3px 1px;"><div class="bar" style="background:${colors[a.type]};border-radius:${r};"></div></td>`;
+        let extra = '';
+        if (a.del) extra = 'border:1px dashed #6F2617;';
+        cells += `<td style="${stripe} padding:3px 1px;"><div class="bar" style="background:${colors[a.type]};border-radius:${r};${extra}"></div></td>`;
       } else {
         cells += `<td style="${stripe}"></td>`;
       }
@@ -951,50 +487,45 @@
   /* ── CARGA ── */
   const areas = [
     {
-      name: "Assuntos Regulatórios", badge:"badge-reg",
-      desc: "Arcabouço normativo, agenda regulatória, radar, precedentes, interfaces institucionais, posicionamento ANEEL/ONS/EPE, jurisprudência",
-      total: 380, pico:"M3–M4", fase:"P1 → P3",
-      load:[8,8,10,10,12,14,16,14,16,18,20,18,14,16,18,16,14,12,10,10,10,8,8,6]
-    },
-    {
-      name: "Regulação e Tarifas", badge:"badge-tar",
-      desc: "Fichas analíticas de RAP, alavancas tarifárias, reajustes, revisões periódicas, pipeline de reforços, benchmarking tarifário, ciclos ANEEL",
-      total: 620, pico:"M2–M3", fase:"P1 → P5",
-      load:[12,14,16,14,18,20,22,18,20,22,24,20,16,14,18,20,22,18,14,12,14,16,12,10]
-    },
-    {
       name: "Consultoria Financeira", badge:"badge-fin",
-      desc: "Materialidade, sensibilidades, modelagem de cenários, análise de retorno, estrutura de capital, comparativos de valor",
-      total: 480, pico:"M2–M4", fase:"P2 → P3",
-      load:[6,8,10,10,14,16,18,16,18,20,22,20,18,16,18,20,16,14,14,12,14,16,12,8]
+      desc: "Exposição financeira e materialidade, modelagem e sensibilidades de RAP, comparativo de reforços (TIR/payback), cenários de vincendas, valor do ativo 2030, painel executivo de priorização e narrativa de trade-offs.",
+      pico:"M3–M5", fase:"Fase 1 → 5",
+      load:[8,12,14,14, 14,18,18,16, 16,20,22,22,20,18, 16,18,18,16, 16,18,16,14, 10,8]
     },
     {
-      name: "Preços e Estudos de Mercado", badge:"badge-gest",
-      desc: "Análises comparativas, benchmarks de RAP e sensibilidades de variáveis de mercado",
-      total: 180, pico:"M2", fase:"P2",
-      load:[4,4,6,6,10,12,12,10,8,8,6,6,6,6,6,6,4,4,4,4,4,4,4,2]
+      name: "Regulação Econômica (Tarifas)", badge:"badge-tar",
+      desc: "Fichas tarifárias (26), composição e exposição da RAP, IRT e revisões, histórico de reajustes, benchmarking de RAP, estratégia de otimização da RAP, mapeamento tarifário de vincendas e do ativo 2030.",
+      pico:"M1 e M3", fase:"Fase 1 → 5",
+      load:[16,18,20,18, 10,18,20,18, 14,20,22,22,20,18, 12,16,16,14, 10,12,12,10, 8,6]
     },
     {
-      name: "Novos Negócios / Estudos Elétricos", badge:"badge-gest",
-      desc: "Leitura técnica de ativos, maturidade de reforços, prontidão documental, benchmarking setorial de soluções e KPIs",
-      total: 280, pico:"M1–M2", fase:"P1 → P2",
-      load:[10,12,12,10,14,14,12,10,12,12,10,8,8,8,10,10,8,8,8,8,6,6,6,4]
+      name: "Regulatório", badge:"badge-reg",
+      desc: "Arcabouço técnico e Procedimentos de Rede, agenda e radar regulatório, novas tecnologias/receitas (BESS, SSC, ancilares), elegibilidade técnica de R&M, software/ferramentas e IA, governança e estrutura interna, benchmarking de transmissoras.",
+      pico:"M4", fase:"Fase 1 → 5",
+      load:[8,12,14,14, 10,14,16,14, 10,12,14,14,14,16, 16,18,20,18, 10,12,12,10, 8,6]
+    },
+    {
+      name: "Novos Negócios", badge:"badge-gest",
+      desc: "Apoio pontual: mapeamento de tecnologias emergentes de receita (BESS, SSC) na Fase 1 e avaliação de participação em leilões de concessões de terceiros vincendas na Fase 3B.",
+      pico:"M1 e M4", fase:"Fase 1 e 4",
+      load:[6,8,10,8, 2,2,2,2, 2,2,2,2,4,6, 8,10,10,8, 2,2,2,2, 0,0]
     },
     {
       name: "PMO / Gestão do Projeto", badge:"badge-pmo",
-      desc: "Cronograma, controle de entregas, preparação de workshops, governança do projeto e validações com o cliente",
-      total: 160, pico:"Constante", fase:"Todo o projeto",
-      load:[6,6,6,6,6,8,8,6,6,8,8,6,6,6,8,8,6,6,6,8,6,6,8,6]
+      desc: "Cronograma e controle de entregas, preparação e condução dos workshops com a State Grid, governança do projeto, consolidação e validações com o cliente.",
+      pico:"Constante", fase:"Todo o projeto",
+      load:[8,6,6,8, 8,6,6,8, 6,6,6,6,6,8, 8,6,6,8, 8,8,8,8, 10,10]
     },
   ];
 
   const loadChart = document.getElementById('load-chart');
-  areas.forEach(a => {
+  if (loadChart) areas.forEach(a => {
+    const total = a.load.reduce((s,h)=>s+h,0);
     const wrap = document.createElement('div');
     wrap.className = 'load-section';
     const hdr = document.createElement('div');
     hdr.className = 'load-header';
-    hdr.innerHTML = `<span class="badge ${a.badge}">${a.name}</span><span style="font-size:10px;color:var(--text3);font-family:'DM Mono',monospace;">~${a.total}h total</span>`;
+    hdr.innerHTML = `<span class="badge ${a.badge}">${a.name}</span><span style="font-size:10px;color:var(--text3);font-family:'DM Mono',monospace;">~${total}h total</span>`;
     const grid = document.createElement('div');
     grid.className = 'load-bars';
     a.load.forEach(h => {
@@ -1004,9 +535,10 @@
       if (h > 24)      { bg = '#E36523'; col = '#fff'; }
       else if (h > 16) { bg = '#FDF0E8'; col = '#6F2617'; }
       else if (h > 8)  { bg = '#FEF4E6'; col = '#7A3D06'; }
+      else if (h === 0){ bg = 'transparent'; col = 'transparent'; }
       cell.style.background = bg;
       cell.style.color = col;
-      cell.textContent = h;
+      cell.textContent = h === 0 ? '·' : h;
       grid.appendChild(cell);
     });
     wrap.appendChild(hdr);
@@ -1014,13 +546,14 @@
     loadChart.appendChild(wrap);
   });
 
-  const atbody = document.getElementById('area-tbody'); // Corrigido aqui
-  areas.forEach(a => {
+  const atbody = document.getElementById('area-tbody');
+  if (atbody) areas.forEach(a => {
+    const total = a.load.reduce((s,h)=>s+h,0);
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td><span class="badge ${a.badge}">${a.name}</span></td>
       <td style="font-size:11px;color:var(--text2);">${a.desc}</td>
-      <td style="text-align:center;font-weight:600;font-family:'DM Mono',monospace;">~${a.total}h</td>
+      <td style="text-align:center;font-weight:600;font-family:'DM Mono',monospace;">~${total}h</td>
       <td style="text-align:center;font-size:11px;color:var(--text3);font-family:'DM Mono',monospace;">${a.pico}</td>
       <td style="text-align:center;"><span class="badge" style="background:var(--surface2);color:var(--text3);font-size:10px;">${a.fase}</span></td>
     `;
@@ -1030,5 +563,3 @@
 
 </body>
 </html>
-
-```
